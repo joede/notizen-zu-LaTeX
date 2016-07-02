@@ -1,0 +1,724 @@
+\documentclass[a4paper,12pt,parskip=half,headsepline,footsepline,captions=tableheading,ngerman]{scrartcl}
+\usepackage{scrpage2}             % http://tex.stackexchange.com/questions/166779/koma-script-throws-extra-else-error
+\pagestyle{useheadings}           % due to a bug, \pagestyle{headings} throws errors
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{menukeys}
+\usepackage{booktabs}
+\usepackage[locale=DE]{siunitx}
+\usepackage{xcolor}
+%\usepackage{mdframed}
+\usepackage[framemethod=tikz]{mdframed}
+
+
+% ----- Lokale Definitionen -----
+\def\ThisReleaseId{\textbf{Revision~R.1}}
+% -------------------------------
+
+\hypersetup{
+    pdftitle = {Notizen zu LaTeX},
+    pdfsubject = {Eine lose Sammlung von Notizen zur Nutzung von LaTeX.},
+    pdfauthor = {Jörg Desch},
+    colorlinks = true,
+    linkcolor = black,
+    citecolor = black,
+    filecolor = black,
+    urlcolor = blue
+}
+
+% Eine Anmerkung in einer "Box"
+\newenvironment{anmerkung}[1][Anmerkung:]{%
+  \noindent%
+  \begin{minipage}{\linewidth}%
+    \smallskip%
+    \rule{\linewidth}{.4pt}%
+    \smallskip% == \vspace{\smallskipamount}%
+    \newline\noindent\textbf{#1}%
+    \enspace\ignorespaces%
+}{%
+    \smallskip
+    \rule{\linewidth}{.4pt}%
+    \smallskip%
+  \end{minipage}%
+}
+
+% Zähler für Testpunkte
+\newcounter{testnr}
+\newcommand{\Testpunkt}[1]%
+{\def\tmpval{#1}%
+\refstepcounter{testnr}%
+{\bfseries\par\medskip\noindent Test~\arabic{testnr}%
+\ifx\tmpval\empty\else\label{\tmpval}\fi:\enspace\ignorespaces}}
+
+% Alternative für sichtbare Leerzeichen
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+
+% Die Randnotiz.
+\newcommand{\marginlabel}[1]%
+  {\mbox{}\marginpar{\raggedleft\footnotesize\itshape\hspace{0pt}#1}\ignorespaces}
+
+% Palette URL: http://paletton.com/#uid=c012Y0+3r0kkZm3aow+fKrcpThlv9ca
+\definecolor{myRed}{RGB}{176, 63, 61}
+\definecolor{myRedBrighter}{RGB}{255,174,172}
+\definecolor{myRedBright}{RGB}{217,113,110}
+\definecolor{myRedDark}{RGB}{138, 29, 26}
+\definecolor{myRedDarker}{RGB}{ 97,  5,  3}
+\definecolor{myYellow}{RGB}{176,139, 61}
+\definecolor{myYellowBrighter}{RGB}{255,229,172}
+\definecolor{myYellowBright}{RGB}{217,183,110}
+\definecolor{myYellowDark}{RGB}{138,103, 26}
+\definecolor{myYellowDarker}{RGB}{ 97, 67,  3}
+\definecolor{myBlue}{RGB}{ 41, 90,111}
+\definecolor{myBlueBrighter}{RGB}{113,148,164}
+\definecolor{myBlueBright}{RGB}{ 72,117,137}
+\definecolor{myBlueDark}{RGB}{ 20, 67, 87}
+\definecolor{myBlueDarker}{RGB}{  4, 44, 61}
+\definecolor{myGreen}{RGB}{ 44,126, 77}
+\definecolor{myGreenBrighter}{RGB}{125,186,150}
+\definecolor{myGreenBright}{RGB}{ 79,156,110}
+\definecolor{myGreenDark}{RGB}{ 19, 99, 51}
+\definecolor{myGreenDarker}{RGB}{  2, 70, 29}
+
+%entweder so
+%\setkomafont{disposition}{\color{myBlueDark}\sffamily\bfseries}
+%oder so
+\addtokomafont{sectioning}{\color{myBlueDark}}
+\addtokomafont{sectionentry}{\color{myBlueDark}}
+
+
+% Neue Boxen für mdframed
+\newcounter{beispiel}
+\newmdenv[
+  linecolor  = myGreen ,
+  linewidth  = .5ex ,
+  rightline  = false ,
+  leftline   = false ,
+  frametitle = {\refstepcounter{beispiel}\textbf{Beispiel~\thebeispiel.}}
+]{beispiel}
+\newmdenv[
+  frametitle = {\textbf{Info}}
+]{info}
+\newmdenv[
+  backgroundcolor = myYellowBrighter,
+  roundcorner     = 10pt,
+  % hidealllines    = true,
+  linecolor       = myYellowDark,
+  leftmargin      = 2em ,
+  rightmargin     = 2em ,
+  skipabove       = \baselineskip ,
+  skipbelow       = \baselineskip ,
+  frametitle      = Definition ,
+  frametitlefont  = \large\sffamily\scshape ,
+  frametitlebackgroundcolor = myYellow
+]{definition}
+
+
+
+\title{Notizen zu \LaTeX{}}
+\author{Jörg Desch\\
+\href{http://creativecommons.org/licenses/by-sa/4.0/}{CC-BY-SA}}
+\date{\ThisReleaseId \\ \today}
+
+
+
+\begin{document}                  % Beginning of text.
+
+\maketitle
+\begin{abstract}
+Dieses Dokument ist keine Einführung in \LaTeX{}. Es ist vielmehr eine lose
+Sammlung von Notizen zur Nutzung von \LaTeX{}. Sie ist im Laufe einiger Jahre
+mehr oder weniger intensiver Nutzung entstanden, und war ursprünglich nicht
+für eine Veröffentlichung vorgesehen. Für mich ist dieses Dokument mehr ein
+Schmierblock mit Schnipseln und Tipps. Nichtsdestotrotz versuche ich nach der
+Veröffentlichung dieses Dokument weiter zu ergänzen und zu überarbeiten.
+Die Struktur des Dokuments ist über die Jahre gewachsen und sicherlich Gegenstand
+von Änderungen, sobald sich einmal die Zeit dazu bietet.
+\end{abstract}
+\tableofcontents
+
+
+%% =========================================================================
+\section{Nutzung des Randbereichs}
+
+%% -------------------------------------------------------------------------
+\subsection{Notizen im Randbereich}
+
+\marginlabel{Eine kleine Anmerkung am Rande} Der neue Befehl \texttt{marginlabel} erzeugt eine Randnotiz. Da diese nicht so sehr auffallen sollte, ist die kleiner gesetzt. Um Trennungsprobleme zu minimieren und den Abstand zum Fließtext, ist der Text rechtsbündig. Durch das führende \verb|\hspace{0pt}| kann auch schon das erste Word getrennt werden. Dies ist wegen der geringen Breite sinnvoll.
+
+\begin{verbatim}
+  \newcommand{\marginlabel}[1]%
+    {\mbox{}\marginpar{\raggedleft\footnotesize%
+     \itshape\hspace{0pt}#1}\ignorespaces}
+\end{verbatim}
+
+
+%% -------------------------------------------------------------------------
+\subsection{Bilder im Randbereich}
+
+Der neue Befehl \texttt{marginfig} erzeugt ein Bild im Randbereich. Die \texttt{minipage} mit dem \texttt{vspace} ist wegen der Ausrichtung nötig. Ohne sie wäre der untere Rand des Bildes gleich dem der Zeile, in dem \texttt{marginfig} eingefügt wird. Der Trick mit \verb|minipage[t]| und \verb|vspace{-\baselineskip}| stammt aus "`epslatex.ps"' (Part~III
+Abschnitt~11\@.4\@.2).
+
+\texttt{marginfig} bekommt den Namen des Bildes als Parameter übergeben. Des weiteren erlaubt der Befehl den Gebrauch eines optionalen Parameters, der unverändert an den Befehl \verb|\includegraphics| durchgereicht wird.
+
+\begin{verbatim}
+  \newcommand{\marginfig}[2][]%
+  {\mbox{}\marginpar{%
+  \begin{minipage}[t]{\marginparwidth}%
+  \par\vspace{-\baselineskip}%
+  \includegraphics[#1]{#2}%
+  \end{minipage}}}
+\end{verbatim}
+
+\paragraph{Hinweis:}
+Will man die Bilder auf die Breite des Randbereich skalieren, so sollte als Basis für diese Angabe die Variable \verb|\marginparwidth| verwendet werden.
+
+
+
+%% =========================================================================
+\section{Besondere Darstellungen}
+
+%% -------------------------------------------------------------------------
+\subsection{Umranden von Text}
+\label{sec:framed-text}
+
+Um zum Beispiel eine Taste zu stilisieren, kann man einen mit einem Oval umrahmten Text verwenden. Nachfolgendes Code-Schnipsel ist aus Kofler's Buch "`Linux"' entnommen. Es zeichnet ein Oval um einen verkleinerten Text, ohne dass der Zeilenabstand verändert wird. Für die symbolische Darstellung von Tasten ist das unter Abschnitt~\ref{sec:key-box} beschriebene Paket \texttt{menukeys}aber wesentlich besser geeignet.
+
+\begin{verbatim}
+  \newbox\mybox%
+  \newcount\laenge%
+  \newcount\laengehalbe%
+  \newcommand{\txtframe}[1]{%
+  \setbox\mybox=%
+  \hbox{\textsf{\footnotesize #1}}%
+  \laenge=\wd\mybox%
+  \advance\laenge by 370000%
+  \laengehalbe=\laenge%
+  \divide \laengehalbe by 2%
+  \unitlength1sp%
+  \begin{picture}(\laenge,600000)(0,140000)%
+    \put(\laengehalbe,300000){\oval(\laenge,600000)}%
+    \put(185000,140000){\unhbox\mybox}%
+  \end{picture}}
+\end{verbatim}
+
+%% -------------------------------------------------------------------------
+\subsection{Symbolische Darstellung von Tasten und Menüs}
+\label{sec:key-box}
+
+Das sehr interessante Paket \texttt{menukeys} erlaubt das einfache Setzen von Menühierarchien und Tasten. Mit dem Befehl kann man einen Menueintrag oder durch \verb|>| getrennt ganze Hierarchien angeben. Für Tasten gibt den Befehl \texttt{keys}, der Einzeltasten und durch \verb|+| verbunden auch Tastenkombinationen darstellen kann. Verzeichnispfade kann man mit \texttt{directory} abbilden.
+
+\begin{tabular}{ll}
+    \verb|\menu{Extras}|                         & \menu{Extras}                         \\
+    \verb|\menu{Extras > Setup > Leiste}|        & \menu{Extras > Setup > Leiste}        \\
+    \verb|\keys{A}|                              & \keys{A}                              \\
+    \verb|\keys{Strg + R}|                       & \keys{Strg + R}                       \\
+    \verb|\directory{/home/Your Name/Documents}| & \directory{/home/Your Name/Documents} \\
+\end{tabular}
+
+
+%% -------------------------------------------------------------------------
+\subsection{Eine Tastenliste}
+\label{sec:key-lst}
+
+Um in einer Dokumentation eine ganze Reihe von Tasten zu beschreiben, bietet sich nochfolgende modifizierte Liste an. Die Umbegung \texttt{Keylist} verwendet den unter Abschnitt~\ref{sec:key-box} aufgezeigten Befehl \texttt{key} zur Darstellung von Tasten. Zudem werden der hängende Text nach der Taste (dem item) eingerückt. Das Maß der Einrückung wird aus der Breite des als Parameter übergebenen Textes ermittelt. Man muss hier also die längste Tastenbeschriftung übergeben.
+
+Das ganze ist eine Modifikation der Liste \texttt{Ventry} aus dem ``LaTeX Begleiter''.
+
+\begin{verbatim}
+  \newenvironment{Keylist}[1]%
+    {\begin{list}{}{%
+     \renewcommand{\makelabel}[1]{\keys{##1}\hfill}%
+     \setlength{\labelwidth}{#1}%
+     \setlength{\leftmargin}{\labelwidth}%
+     \addtolength{\leftmargin}{\labelsep}}}%
+    {\end{list}}
+\end{verbatim}
+
+%% =========================================================================
+\section{Von Boxen und anderen Schachteln}
+
+%% -------------------------------------------------------------------------
+\subsection{Eine Verbatim-Box}
+
+Die Umbegung \texttt{verbatim} wird normalerweise immer linksbündig ausgegeben. Zudem lässt sie sich nicht zentrieren. Das kann man umgehen, in dem man die Umgebung \texttt{verbatim} in eine \texttt{minipage} packt. Dies erlaubt nun die Zentrierung oder auch die Verwendung einer \texttt{figure} Umgebung, so dass man nun auch Referenzen verwenden kann. Das nachfolgende Schnipsel zeigt eine solche Verwendung. In diesem Beispiel wird die Breite der \texttt{minipage} auf die Hälfte der Zeilenbreite reduziert.
+
+\begin{verbatim}
+  \begin{figure}[htbp]
+  \centering
+  \begin{minipage}{0.5\linewidth}
+  \begin{verbatim}
+  DIES IST TEXT IN DER VERBATIM-BOX
+  \end{v erbatim}
+  \end{minipage}
+  \caption{Die Bildunterschrift}
+  \label{fig:ein-label}
+  \end{figure}
+\end{verbatim}
+
+
+%% -------------------------------------------------------------------------
+\subsection{Eine leichtgewichtige Anmerkungsbox}
+
+\begin{anmerkung}[Kommentar:]
+Dies ist eine Anmerkungsbox, wie sie mit dem \emph{neuen} Environment \texttt{anmerkung} erzeugt wird. Das ganze bezieht sich auf die Zeilenbreite, und sollte somit auch bei zweispaltigem Satz korrekt arbeiten.
+\end{anmerkung}
+
+Diese hübsche und leichtgewichtige (da von Paketen unabhängige) Box erreicht man durch folgende neue Umgebung. Der optionale Parameter ist der ``Titel'' des Textes, der dem nachfolgenden Satz vorangestellt wird. Der Default ist \textbf{Anmerkung:}. Das ganze basiert übrigends auf einem Posting von Bernd Raichle. Ich habe nur ein paar kleine Änderungen vorgenommen.
+
+\begin{verbatim}
+  \newenvironment{anmerkung}[1][Anmerkung:]{%
+    \noindent%
+    \begin{minipage}{\linewidth}%
+      \smallskip%
+      \rule{\linewidth}{.4pt}%
+      \smallskip% == \vspace{\smallskipamount}%
+      \newline\noindent\textbf{#1}%
+      \enspace\ignorespaces%
+  }{%
+      \smallskip
+      \rule{\linewidth}{.4pt}%
+      \smallskip%
+    \end{minipage}%
+  }
+\end{verbatim}
+
+%% -------------------------------------------------------------------------
+\subsection{Die große Lösung für Boxen}
+
+Mit dem Paket \texttt{mdframed} gibt es ein komplettes Paket das Rahmen zeichnet. Der Befehl \texttt{newmdenv} erlaubt eine einfache Definition einer neuen "gerahmten" Umgebung. In den Optionen des Befehls kann die Umgebung umfangreich konfiguriert werden. Dies reicht von Sichtbarkeit oder Farbe der Linien, Abständen, Titel bis hin zur Farbe der Hintergründe der Box und des Titels.
+
+Das Modul erlaubt verschiedene Zeichenmodule zu nutzen. Diese werden beim Einbinden des Pakets mit der Option \texttt{framemethod} gewählt. Nutzt man zum Beispiel \texttt{framemethod=tikz}, dann ist es möglich Boxen mit abgerundeten Ecken zu zeichnen.
+
+Neben der Definition eigener Umgebungen mittels \texttt{newmdenv} kann man auch eine Standardbox mit lokalen Optionen verwenden. Die globalen Einstellungen des Pakets lassen sich mit \texttt{mdfsetup} verändern. Auf diese Features gehe ich aber nicht weiter ein (\verb|\begin{mdframed}[OPTIONEN]|).
+
+Die Farben in den Beispielen verwenden die Farbpalette aus Abschnitt~\ref{sec:pastell-palette}.
+
+\paragraph{Beispielbox}
+\begin{verbatim}
+\newcounter{beispiel}
+\newmdenv[
+  linecolor  = myGreen ,
+  linewidth  = .5ex ,
+  rightline  = false ,
+  leftline   = false ,
+  frametitle = {\refstepcounter{beispiel}\textbf{Beispiel~\thebeispiel.}}
+]{beispiel}
+\end{verbatim}
+\begin{beispiel}
+Das hier ist eine Beispielbox die nur horizontale Linien besitzt. Diese Box verwendet einen eigenen Zähler, welcher automatisch im Titel der Box verwendet wird. Innerhalb der Box sind Fußnoten\footnote{wie diese hier} erlaubt und werden innerhalb der Box dargestellt.
+\end{beispiel}
+
+\paragraph{Infobox}
+\begin{verbatim}
+\newmdenv[
+  frametitle = {\textbf{Info}}
+]{info}
+\end{verbatim}
+\begin{info}
+Das hier ist eine Infobox. Hier wird nur der Titel der Box als Option übergeben. Der Rest entspricht der Standardeinstellung.
+\end{info}
+
+\paragraph{Definitionsbox}
+\begin{verbatim}
+\newmdenv[
+  backgroundcolor = myYellowBrighter,
+  roundcorner     = 10pt,
+  linecolor       = myYellowDark,
+  leftmargin      = 2em ,
+  rightmargin     = 2em ,
+  skipabove       = \baselineskip ,
+  skipbelow       = \baselineskip ,
+  frametitle      = Definition ,
+  frametitlefont  = \large\sffamily\scshape ,
+  frametitlebackgroundcolor = myYellow
+]{definition}
+\end{verbatim}
+\begin{definition}
+Das hier ist eine Definitionsbox. Diese hat einen Hintergrund für den Titel und einen für die Box selbst. Der Titel ist in \emph{small caps} gesetzt. Zudem wurden \texttt{2em} linker und rechter Rand eingebaut. Als Besonderheit sind hier die Ecken der Box abgerundet.
+\end{definition}
+
+
+
+%% =========================================================================
+\section{Eigene Zähler verwenden}
+
+%% -------------------------------------------------------------------------
+\subsection{Testpunkte automatisch erzeugen}
+
+In vielen Bereichen werden Testpunkte, Anforderungen oder andere Punkte durchnummeriert, um diese Eindeutig referenzieren zu können. Das folgende \LaTeX{}-Schnipsel zeigt einen Befehl, der zur Definition von Testpunkten dient. Er erlaubt die optionale Angabe eines Labels, so dass ein Referenzieren möglich wird. Diese Version verzichtet absichtlich auf das Paket \texttt{ifthen} und verwendet die \TeX{}-Befehle \verb|\ifx| und \verb|\else|.
+
+\begin{verbatim}
+  \newcounter{testnr}
+  \newcommand{\Testpunkt}[1]%
+  {\def\tmpval{#1}%
+  \refstepcounter{testnr}%
+  {\bfseries\par\medskip\noindent Test~\arabic{testnr}%
+  \ifx\tmpval\empty\else\label{\tmpval}\fi:\enspace\ignorespaces}}
+\end{verbatim}
+
+Ein Beispiel für das Ergebnis dieses neuen Befehls sind die folgenden Testpunkte.
+
+\Testpunkt{} Dies wäre der erste Testpunkt. Da es sich um einen ganz normalen
+    Absatz handelt, kann der Text also ruhig länger werden.
+
+\Testpunkt{tp:sample2} Dies ist der zweite Testpunkt.
+
+\Testpunkt{} \ldots{}ist nun aber wirklich der letzte Punkt. Er folgt direkt
+    auf Testpunkt~\ref{tp:sample2}.
+
+Verwendet wird der Befehl durch \verb|\Testpunkt{}| gefolgt von dem normalen Fließtext. Man kann diesem Befehl ein Label übergeben (\verb|\Testpunkt{tp:xx}|), so dass sich mit \verb|\ref{tp:xx}| auf die Nummer dieses Testpunkts beziehen kann.
+
+\begin{anmerkung}
+In einer eigenen QSM-Klasse sollte der Name ``Testpunkt'' über eine Variable konfigurierbar gemacht werden. Des weiteren sollte die Referenz nicht über ``\verb|Testpunkt~\ref{}|'' erfolgen. hierfür sollte ein eigener Befehl exisitieren, der den entsprechenen Namen aus der Variable des Pakets ließt.
+\end{anmerkung}
+
+%% =========================================================================
+\section{Das Spiel mit den Einheiten}
+
+Um Zahlen mit Maßeinheiten zu verwenden, bieten sich die Pakete \texttt{siunitx} oder \texttt{units}. Das Erstere ist zu bevorzugen.
+
+Zahlen wie \SI{10}{\meter\per\second} oder \SI{10}{\meter} sind mit dem Befehl \verb|\SI{}{}| schnell geschrieben. Der Befehl wertet den Zahlenwert aus und nutzt das zur Formatierung der Zahl. Das macht Probleme, wenn man statt einer Zahl einen Bruch mit \verb|\frac| angeben will. Um das zu tun, muss man \texttt{SI} per Option das Untersuchen der Zahl verbieten. Das geschieht durch Angabe der Option \texttt{parse-numbers}.
+
+Will man nur die Einheit formatieren, dann kann den Befehl \texttt{si} verwenden. Der arbeitet wie ``der große Bruder'' \texttt{SI}, erwartet aber einen Zahlenparameter.
+
+Einfache Zeichen wie $\mu$ oder $\theta$ (\verb|$\mu$| oder \verb|$\theta$|) lassen sich aber auch direkt in einer eigebettetn Mathe-Umgebung mit deren Namen angeben. Ein Großbuchstabe im Namen erzeugt dann auch den passenden Großbuchstaben. Diese Zeichen werden dann aber wir in Formeln typisch kursiv geschrieben. Das Wikibook \href{https://de.wikibooks.org/wiki/LaTeX-Kompendium:_Sonderzeichen}{LaTex-Kompedium} liefert eine nette Übersicht.
+
+\textbf{Beispiele:}
+
+\begin{verbatim}
+\SI{10}{\meter}
+\SI{0.0001}{\meter\per\second}
+\SI[per-mode=fraction]{0.0001}{\meter\per\second}
+\SI[parse-number=false]{\frac{1}{5}}{\micro\meter}
+\si{\micro\meter}
+\si{\meter/\second^2}
+\SI{50 x 180 x 200}{mm}
+%\ang{<Zahl>} formatiert Winkel
+\ang{180,5}
+%\num{47+-0,5} für Toleranzen
+\num{47+-0,5} oder \num[separate-uncertainty=true]{47+-0,5}
+\SI{7+-0,1}{\metre} oder \SI[separate-uncertainty=true]{7+-0,1}{\metre}.
+  Alternativ \num[separate-uncertainty=true]{7+-0,1}~\si{\metre}!
+\end{verbatim}
+
+\begin{itemize}
+  \item \SI{10}{\meter}
+  \item \SI{0.0001}{\meter\per\second}
+  \item \SI[per-mode=fraction]{0.0001}{\meter\per\second}
+  \item \SI[parse-numbers=false]{\frac{1}{5}}{\micro\meter}
+  \item \si{\micro\meter}
+  \item \si{\meter/\second^2}
+  \item \SI{50 x 180 x 200}{mm}
+  \item \ang{180,5}
+  \item \num{47+-0,5} oder \num[separate-uncertainty=true]{47+-0,5}
+  \item \SI{7+-0,1}{\metre} oder \SI[separate-uncertainty=true]{7+-0,1}{\metre}. Alternativ \num[separate-uncertainty=true]{7+-0,1}~\si{\metre}!
+\end{itemize}
+
+Wem die Einheiten als Bruch besser gefallen, der kann das mit \verb|per-mode=fraction| selektiv als Option angeben (siehe Beispiele). Global lässt sich das in die Präambel nach dem Einfügen des Paketes die folgende Konfigurationssequenz einbauen. Des weiteren sollte man bei der Verwendung von Toleranzen die Klammerung durch das Schönere $\pm$ ersetzen. Dies erreicht man mit \verb|separate-uncertainty=true|
+
+\begin{verbatim}
+\sisetup{
+  per-mode=fraction,
+  fraction-function=\tfrac,
+  separate-uncertainty=true
+}
+\end{verbatim}
+
+\begin{anmerkung}
+Offen ist noch, warum die Anwendung von Toleranzen mit Einheiten äußerere Klammern
+einfügt. (\verb|\SI{7+-0,1}{\metre}|). Möchte man das nicht, muss man vorerst auf eine
+getrennte Anwendung von \verb|\num| und \verb|\si| zurückgreifen.
+\end{anmerkung}
+
+% % nur mit Paket \texttt{unit}!
+% Will man die Einheit leider als Bruch, dann geht das mit \verb|\unitfrac| ebenfalls recht einfach.
+%
+%\unitfrac[5]{\meter}{\second}
+
+%% -------------------------------------------------------------------------
+\subsection{Listen von Zahlen}
+
+Gibt man eine Liste oder einen Bereich von Zahlen an, dann gehört die Einheit an jede Zahl. Das kann ziemlich nerven, weswegen die Entwickler von \texttt{siunitx} die Befehle \texttt{SIlist} und \texttt{SIrange} eingebaut haben.
+
+\begin{verbatim}
+%\numlist{<Zahl;Zahl;Zahl>} formatiert Zahlenlisten
+\numlist{10;20;30}
+%\SIlist{<Zahl;Zahl;Zahl>}{<Einheit>} formatiert Zahlenlisten mit Einheit
+\SIlist{10;20;30}{\meter}
+%\SIrange{<Zahl>}{<Zahl>}{<Einheit>} formatiert Zahlenbereiche mit Einheiten
+\SIrange{10}{20}{\meter}
+\end{verbatim}
+
+\textbf{Beispiele:}
+
+\begin{itemize}
+\item \numlist{10;20;30}
+\item \SIlist{10;20;30}{\meter}
+\item \SIrange{10}{20}{\meter}
+\end{itemize}
+
+\begin{anmerkung}
+Für Bereiche und Listen setzt \texttt{siunitx} automatisch die passenden Begriffe ``bis'' oder ``und'' ein. Damit das auch in der richtigen Sprache erfolgt, reicht es \emph{nicht} aus, einfach nur das Paket \texttt{babel} zu laden. Man muss hierfür die Sprache an Klassenoption an die Dokumentenklasse übergeben. Dadurch bekommen alle später geladenen Paket die Sprache mit. Das hat dann den Nebeneffekt, dass \emph{KOMA-Script} auch gleich Babel mitlädt.
+
+Beispiel: \verb|\documentclass[ngerman]{scrartcl}|\\
+
+Gegebenenfalls muss man auch die Option \texttt{locale=DE} an \texttt{siunitx} angeben. Dies sorgt dafür, dass die Darstellung der Zahlen ``eingedeutscht'' werden.
+\end{anmerkung}
+
+
+%% =========================================================================
+\section{Silbentrennung}
+
+Die Silbentrennung erfolgt in \LaTeX an sich automatisch, mit einem speziellen Algorithmus. Dieser versagt jedoch ausnahmsweise, sowie systematisch in folgenden Fällen:
+
+\begin{itemize}
+\item
+  In zusammengesetzten Wörtern. Z. B. wird \texttt{Staatsvertrag} nicht
+  an der Wortfuge getrennt. Abhilfe leistet das Paket \emph{hyphsubst}
+  \footnote{\texttt{\textbackslash{}RequirePackage{[}ngerman=ngerman-x-latest{]}\{hyphsubst\}}}
+\item
+  Wörter mit Sonderzeichen (etwa: Umlaut) werden nicht immer getrennt,
+  je nach den verwendeten Paketen und Schriften
+  (\href{http://projekte.dante.de/DanteFAQ/Silbentrennung}{siehe
+  Dante-FAQ: (Silben-)Trennung, Absatz-, Seitenumbruch})
+\item
+  Wörter, die einen Bindestrich enthalten, werden ausschließlich am
+  Bindestrich getrennt, etwa \texttt{Karl-Franzensuniversität}.
+\end{itemize}
+
+%% -------------------------------------------------------------------------
+\subsection{gezielte Hilfe bei der Trennung}
+
+Mit folgenden Sequenzen lässt sich die Silbentrennung steuern:
+
+\begin{itemize}
+\item
+  \verb|\-|: Mit dieser Anweisung teilt man \LaTeX{} mit,
+  dass das Wort nur an der betreffenden Stelle getrennt werden kann.
+  \texttt{Staats\textbackslash{}-ver\textbackslash{}-trag}.
+  \textbf{Achtung!} Ist in einem Wort dieses Zeichen gesetzt, wird es an
+  keiner anderen Stelle mehr getrennt werden. Daher sollte man, wenn
+  diese Anweisung in einem Wort verwendet wurde, an jeder Stelle, an der
+  man in diesem Wort einen Umbruch dulden möchte, diese Anweisung
+  setzen.
+\item
+  \verb|"-|: Mittels dieser Anweisung wird eine zusätzliche
+  Trennstelle angegeben. \texttt{Staats"-vertrag} wird also von \LaTeX{} je
+  nach Bedarf auch nach der ersten Silbe getrennt werden.
+  \emph{Hinweis:} Dieser Befehl erfordert das Paket \texttt{german} oder
+  \texttt{ngerman}.
+\item
+  \verb|"=|: Dies erzeugt einen Bindestrich, der die sonstigen
+  Trennstellen im Wort weiterhin erlaubt:
+  \texttt{Karl"=Franzensuniversität} erlaubt die Trennungen
+  \texttt{Karl-Fran-zens-uni-ver-si-tät}. \emph{Hinweis:} Dieser Befehl
+  erfordert das Paket \texttt{german} oder \texttt{ngerman}.
+\item
+  \verb|""|: Diese Anweisung erlaubt einen Umbruch, ohne dass ein
+  Bindestrich gesetzt wird -- etwa für den Fall, dass dieser bereits
+  steht:
+  \texttt{Karl-""Fran\textbackslash{}-zens\textbackslash{}-uni\textbackslash{}-ver\textbackslash{}-si\textbackslash{}-tät}.
+  \emph{Hinweis:} Dieser Befehl erfordert das Paket \texttt{german} oder
+  \texttt{ngerman}.
+\item
+  \verb|"~|: Mit dieser Anweisung setzt man einen
+  Bindestrich, an dem nicht getrennt werden soll, beispielsweise bei
+  Wortergänzungen in Klammern:
+  \texttt{(Haupt"\textasciitilde{})""Straße}
+\item
+  \texttt{\textbackslash{}discretionary\{Anfang\}\{Ende\}\{Ungetrennt\}}:
+  Definiert eine Trennhilfe für Wörter, deren Trennung an einer Stelle
+  anders als erwartet aussieht. Ende ist dabei das Ende des ersten
+  Wortteils in der getrennten Form, Anfang der Anfang des zweiten
+  Wortteils in der getrennten Form, und Ungetrennt ist die betreffende
+  Stelle in ungetrennter Form. Durch die Angabe aller Varianten bleibt
+  LaTeX frei in der Platzierung und Trennung des betreffenden Wortes.
+  Wörter mit ``ck'' hatten nach alter Rechtschreibung (also vor 1996)
+  eine ungewöhnliche Trennung, wie das Wort
+  \texttt{\textbackslash{}discretionary\{rük-\}\{ken\}\{rücken\}} zeigt.
+\end{itemize}
+
+%% -------------------------------------------------------------------------
+\subsection{Globale Silbentrennung}\label{globale-silbentrennung}
+
+Am Anfang des Dokuments kann man eine Liste mit Worten inklusive Trennhilfen eintragen. Da diese Liste intern auf 300 Worte begrenzt ist, macht es keinen Sinn eine solche Liste zentral für alle Texte zu pflegen. Die Liste wird an den Befehl \texttt{hyphenation} übergeben. Wichtig ist, dass keine Sonderzeichen erlaubt sind. Umlaute muss man also als \verb|\"a| schreiben. \textbf{CHECK:} ist das mit XeTeX wegen der UTF8-Nutzung anders?
+
+\begin{verbatim}
+\hyphenation{Staats-ver-trag Stau-be-cken Ver-st\"ar-ker-aus-gang}
+\end{verbatim}
+
+Bei Zusammengesetzen Worten, deren Trennung komplexer ist (wie z.B. ``LaTeX-Wörterbuch''), sollte man am einfachsten eigene Befehle definieren.
+
+\begin{verbatim}
+\newcommand{\LW}{LaTeX"=Wörter"-buch\xspace}
+\end{verbatim}
+
+\textbf{Tipp:} mit \verb|\xspace| kann man ein ``intelligentes'' Leerzeichen einbauen. Danach kommt auch mit \verb|\LW ...| ein Leezeichen (wie bei \verb|\LW{} ...|). Folgt dem Befehl aber ein Satzzeichen, dann wird kein Leerzeichen eingefügt!
+
+%% -------------------------------------------------------------------------
+\subsection{Verhindern der Silbentrennung}
+
+Will man die Silbentrennung komplett verhindern, dann muss man dazu das Wort einfach mit \texttt{\textbackslash{}mbox} einpacken. Das ist nicht sichtbar, verhindert aber die Trennung.
+
+
+%% =========================================================================
+\section{Das Spiel mit Sprachen}
+
+Das Handling der Sprachen in einem Dokument übernimmt das Paket \texttt{babel}. Für "Deutsch" sollte man die "neue" Rechschreibung verwenden. Dazu gibt man dem Paket die Option \texttt{ngerman} mit auf den Weg. \LaTeX{} kümmert sich dann mit Hilfe von \texttt{babel} auch gleich um die Formatierung von länderspezifischen Dingen wie Zahlen oder dem Datum.
+
+Jetzt kommt es nicht selten vor, dass in einem Text verschiedene Sprachen wendet werden müssen. Bei \texttt{babel} gibt man die zusätzlichen Sprachen durch Komma getrennt als weitere Paketoptionen an. \textbf{Wichtig:} die \emph{letzte} Sprache ist die Sprache, die als Vorgabe verwendet wird.
+
+Die Umschaltung von Sprachen erfolgt mit \texttt{selectlanguage}. Hierbei kann man den Textteil als zweiten Parameter angeben, oder man rahmt den Textbereich mit geschweiften Klammern und setzt den Befehl dort als erstes ein. Das nachfolgende Schnippsel zweigt die Umstellung:
+
+\begin{verbatim}
+\usepackage[english,ngerman]{babel}  %& default ist ngerman
+...
+Dies ist ein Test. Heute ist \today{}.
+Ein Beispiel für \foreignlanguage{english}{small regions}.
+{\foreignlanguage{english} Sample for a longer sequence}
+\foreignlanguage{english}
+Toggle to English for the following text.
+\foreignlanguage{ngerman}
+und zurück auf Deutsch. Beides Explizit.
+\end{verbatim}
+
+\paragraph{Quellen:}
+\begin{enumerate}
+    \item \href{http://tug.ctan.org/tex-archive/macros/latex/required/babel/}{babel} auf CTAN.
+    \item \href{http://www.namsu.de/Extra/pakete/Babel.html}{namsu.de: Babel Paket}
+\end{enumerate}
+
+%% =========================================================================
+\section{Das Spiel mit Farben}
+
+Um die Welt von \LaTeX{} farbiger zu gestallten, muss man das Paket \texttt{xcolor} laden. Dieses stellt ein Bündel standardfarben zur Verfügung. Die Namen der Farben sind teilweise nicht sehr eingänglich, weshalb man dem Paket eine Option für verschiedene Bezeichnungen anderer Werkzeuge aufzuzwingen. Man kann aber auch eigene Farben definieren. Das ist besondern interessant, da es im Internet eine Vielzahl von Generatoren für hüb aussehende Farbkombinationen gibt. Mein persönlicher Favorit ist \href{http://paletton.com}{paletton.com}. Hiermit habe ich eine \href{http://paletton.com/#uid=c012Y0+3r0kkZm3aow+fKrcpThlv9ca}{online erzeugte Palette} entworfen, die meinen Anforderungen für verschiedene Aufgaben erfüllt. Die RGB-Werte kann man dann mit Hilfe des Befehls \texttt{definecolor} einem Namen zuordnen.
+
+Bei der Verwendung eigener Farben ist es sinnvoll, wenn man sich die Farben mit Namen definiert, die nicht mit anderen Namen kollidieren. Ich habe hier den Prefix \texttt{my} vorangestellt. In Anwendungen bei denen den Farben bestimmte bedeutungen zugeordnet werden, sollte der Farbname diese Bedeutung wiederspiegeln. So kann man später die Farbe ändern, ohne den ganzen Text durchzusehen.
+
+%% -------------------------------------------------------------------------
+\subsection{Eine pastellige Farbpalette}
+\label{sec:pastell-palette}
+
+\begin{verbatim}
+\definecolor{myRed}{RGB}{176, 63, 61}
+\definecolor{myRedBrighter}{RGB}{255,174,172}
+\definecolor{myRedBright}{RGB}{217,113,110}
+\definecolor{myRedDark}{RGB}{138, 29, 26}
+\definecolor{myRedDarker}{RGB}{ 97,  5,  3}
+\definecolor{myYellow}{RGB}{176,139, 61}
+\definecolor{myYellowBrighter}{RGB}{255,229,172}
+\definecolor{myYellowBright}{RGB}{217,183,110}
+\definecolor{myYellowDark}{RGB}{138,103, 26}
+\definecolor{myYellowDarker}{RGB}{ 97, 67,  3}
+\definecolor{myBlue}{RGB}{ 41, 90,111}
+\definecolor{myBlueBrighter}{RGB}{113,148,164}
+\definecolor{myBlueBright}{RGB}{ 72,117,137}
+\definecolor{myBlueDark}{RGB}{ 20, 67, 87}
+\definecolor{myBlueDarker}{RGB}{  4, 44, 61}
+\definecolor{myGreen}{RGB}{ 44,126, 77}
+\definecolor{myGreenBrighter}{RGB}{125,186,150}
+\definecolor{myGreenBright}{RGB}{ 79,156,110}
+\definecolor{myGreenDark}{RGB}{ 19, 99, 51}
+\definecolor{myGreenDarker}{RGB}{  2, 70, 29}
+\end{verbatim}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.7\linewidth]{latex-notizen--palette}
+\caption{Beispiel einer erzeugten Farbpalette. Neben den Grundfarbton gibt es zwei hellere und zwei dunklere Farbtöne.}
+\label{fig:palette}
+\end{figure}
+
+
+%% -------------------------------------------------------------------------
+\subsection{Überschriften einfärben}
+
+Da ich hauptsächlich die KOMA-Scripte verwende, beschreibe ich hier auch nur die elegante Lösung für dieses Paket. Es gibt einen Befehl \texttt{addtokomafont}, mit dem man einer Schriftengruppe ein neues Attribut zu einer bestehenden Konfiguration hinzufügen kann. Damit macht man nichts kaputt, und verändert keine anderen Einstellungen. Relevante Gruppen sind \texttt{sectioning} und \texttt{sectionentry}. Alternativ könnte man mit \verb|setkomafont{disposition}| den gesamten Schriftensetup ersetzen.
+
+%entweder so
+%\setkomafont{disposition}{\color{myBlueDark}\sffamily\bfseries}
+%oder so
+\begin{verbatim}
+\addtokomafont{sectioning}{\color{myBlueDark}}
+\addtokomafont{sectionentry}{\color{myBlueDark}}
+\end{verbatim}
+
+
+%% =========================================================================
+\section{Verschiedene Kleinigkeiten}
+
+%% -------------------------------------------------------------------------
+\subsection{Leerzeichen sichtbar darstellen}
+
+Um ein Leerzeichen als solches sichtbar in einem Text darzustellen verfügt \LaTeX{} über den Befehl \verb|\textvisiblespace|. So zum Beispiel nachfolgend mit \verb|a\textvisiblespace b|.
+
+Ein explizit sichtbares Leerzeichen: a\textvisiblespace b
+
+Die Breite dieses \emph{sichtbaren Leezeichens} ist aber fest definiert. Will man eine Variante mit definierbarer Breite, dann muss man sich einen eigenen Befehl bauen. Mit dem lassen sich dann nicht nur Leerzeichen ersetzen, sondern er eignet sich auch für die Darstellung von auszufüllenden Feldern in Formularen.
+
+Während der originale Befehl ohne Parameter wie folgt aussieht,
+
+\begin{verbatim}
+\DeclareTextCommandDefault{\textvisiblespace}{%
+  \mbox{\kern.06em\vrule \@height.3ex}%
+  \vbox{\hrule \@width.3em}%
+  \hbox{\vrule \@height.3ex}}
+\end{verbatim}
+
+könnte eine Variante mit optionalem Parameter \verb|\Vtextvisiblespace| so
+deklariert werden:
+
+\begin{verbatim}
+\newcommand\Vtextvisiblespace[1][.3em]{%
+  \mbox{\kern.06em\vrule height.3ex}%
+  \vbox{\hrule width#1}%
+  \hbox{\vrule height.3ex}}
+\end{verbatim}
+
+Ein sichtbares Leerzeichen: a\textvisiblespace b  (im Original)
+
+Ein sichtbares Leerzeichen: a\Vtextvisiblespace b  (Variante)
+
+Ein sichtbares Leerzeichen mit \texttt{1em}: a\Vtextvisiblespace[1em]b
+
+Ein sichtbares Leerzeichen mit \texttt{1cm}: a\Vtextvisiblespace[1cm]b
+
+%% -------------------------------------------------------------------------
+\subsection{Spacing der Paragraphen anpassen}
+
+Ohne zutun verwenden die meisten \LaTeX{} Dokumentenklassen zur optischen Trennung der Paragraphen eine Einrückung ohne einen vertikalen Zeilenabstand. Um dass zu ändern, kann man in den \emph{KOMA-Script} Dokumentenklassen die Klassenoption \texttt{parskip=half} übergeben. Für andere Dokumentenklassen ist das Paket \verb|parskip| einfügen. Wer ein wenig mehr Kontrolle haben mächte, der kann stattdessen die nachfolgenden Einstellungen verwenden.
+
+\begin{verbatim}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.3ex plus 0.5ex minus 0.3ex}
+\end{verbatim}
+
+Mit \texttt{parindent} wird die Einrückung deaktiviert. Die Einstellung mit \texttt{parskip} erfolgt auf Basis der Größeneinheit \texttt{ex}. Dies entspricht der Höhe eines kleines 'x' in der aktuellen Schriftgröße des Fließtextes. Die hier angegebenen \verb|1.3ex| sind also 30\% höher als das kleine 'x'. Mit den Angaben \emph{plus} und \emph{minus} wird \LaTeX{} der mögliche Spielraum bei der Variation des Abstandes angegeben. Der Bereich der Einstellung liegt also hier bei \verb|1ex| bis \verb|1.8ex|.
+
+Alternativ könnte man auch mit der fixen Größeneinheit \texttt{pt} arbeiten.
+
+\begin{verbatim}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\end{verbatim}
+
+%% =========================================================================
+\appendix
+\section{Anhang}
+
+%% -------------------------------------------------------------------------
+\subsection{Historie}
+
+\begin{tabular}{ll}
+\toprule
+\textbf{Revision} & \textbf{Kommentar}  \\
+\midrule
+R.1  &  erste Veröffentlichung \\
+\bottomrule
+\end{tabular}
+
+\end{document}

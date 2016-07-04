@@ -388,22 +388,25 @@ Will man nur die Einheit formatieren, dann kann den Befehl \texttt{si} verwenden
 
 Einfache Zeichen wie $\mu$ oder $\theta$ (\verb|$\mu$| oder \verb|$\theta$|) lassen sich aber auch direkt in einer eigebettetn Mathe-Umgebung mit deren Namen angeben. Ein Großbuchstabe im Namen erzeugt dann auch den passenden Großbuchstaben. Diese Zeichen werden dann aber wir in Formeln typisch kursiv geschrieben. Das Wikibook \href{https://de.wikibooks.org/wiki/LaTeX-Kompendium:_Sonderzeichen}{LaTex-Kompedium} liefert eine nette Übersicht.
 
+Toleranzen werden dem Zahlenwert durch \verb|+-| getrennt nachgestellt. Die Angabe erfolgt allerdings in weniger geläufiger Schreibweise. Damit auch wirklich ein $\pm$ erscheint, muss man die Option \verb|separate-uncertainty=true| verwenden. Im Falle von \verb|\SI| reicht das aber nicht. Hier wird der Zahlenwert zusammen mit der Tolerant geklammert ausgegeben. Die Option \verb|multi-part-units=single| schaltet dies aber bei Bedarf wieder ab. Alternativ kann man mit \texttt{repeat} statt \texttt{single} erreichen, dass die Einheit sowohl dem Zahlenwert als auch der Toleranz angehängt wird.
+
 \textbf{Beispiele:}
 
 \begin{verbatim}
-\SI{10}{\meter}
-\SI{0.0001}{\meter\per\second}
-\SI[per-mode=fraction]{0.0001}{\meter\per\second}
-\SI[parse-number=false]{\frac{1}{5}}{\micro\meter}
-\si{\micro\meter}
-\si{\meter/\second^2}
-\SI{50 x 180 x 200}{mm}
-%\ang{<Zahl>} formatiert Winkel
-\ang{180,5}
-%\num{47+-0,5} für Toleranzen
-\num{47+-0,5} oder \num[separate-uncertainty=true]{47+-0,5}
-\SI{7+-0,1}{\metre} oder \SI[separate-uncertainty=true]{7+-0,1}{\metre}.
-  Alternativ \num[separate-uncertainty=true]{7+-0,1}~\si{\metre}!
+* \SI{10}{\meter}
+* \SI{0.0001}{\meter\per\second}
+* \SI[per-mode=fraction]{0.0001}{\meter\per\second}
+* \SI[parse-number=false]{\frac{1}{5}}{\micro\meter}
+* \si{\micro\meter}
+* \si{\meter/\second^2}
+* \SI{50 x 180 x 200}{mm}
+* \ang{180,5} ist ein formatierter Winkel.
+* \num{47+-0,5} oder \num[separate-uncertainty=true]{47+-0,5} sind
+  Zahlenwerte mit Toleranzen.
+* Zahlenwerte mit Toleranzen und Einheiten: \SI{7+-0,1}{\metre} oder
+  \SI[separate-uncertainty=true,multi-part-units=single]{7+-0,1}{\metre}.
+  Alternativ \SI[separate-uncertainty=true,multi-part-units=repeat]{7+-0,1}{\metre}
+  oder \SI[separate-uncertainty=true]{7+-0,1}{\metre}
 \end{verbatim}
 
 \begin{itemize}
@@ -414,26 +417,23 @@ Einfache Zeichen wie $\mu$ oder $\theta$ (\verb|$\mu$| oder \verb|$\theta$|) las
   \item \si{\micro\meter}
   \item \si{\meter/\second^2}
   \item \SI{50 x 180 x 200}{mm}
-  \item \ang{180,5}
-  \item \num{47+-0,5} oder \num[separate-uncertainty=true]{47+-0,5}
-  \item \SI{7+-0,1}{\metre} oder \SI[separate-uncertainty=true]{7+-0,1}{\metre}. Alternativ \num[separate-uncertainty=true]{7+-0,1}~\si{\metre}!
+  \item \ang{180,5} ist ein formatierter Winkel.
+  \item \num{47+-0,5} oder \num[separate-uncertainty=true]{47+-0,5} sind Zahlenwerte mit Toleranzen.
+  \item Zahlenwerte mit Toleranzen und Einheiten: \SI{7+-0,1}{\metre} oder \SI[separate-uncertainty=true,multi-part-units=single]{7+-0,1}{\metre}. Alternativ \SI[separate-uncertainty=true,multi-part-units=repeat]{7+-0,1}{\metre} oder \SI[separate-uncertainty=true]{7+-0,1}{\metre}.
 \end{itemize}
 
-Wem die Einheiten als Bruch besser gefallen, der kann das mit \verb|per-mode=fraction| selektiv als Option angeben (siehe Beispiele). Global lässt sich das in die Präambel nach dem Einfügen des Paketes die folgende Konfigurationssequenz einbauen. Des weiteren sollte man bei der Verwendung von Toleranzen die Klammerung durch das Schönere $\pm$ ersetzen. Dies erreicht man mit \verb|separate-uncertainty=true|
+Wem die Einheiten als Bruch besser gefallen, der kann das mit \verb|per-mode=fraction| selektiv als Option angeben (siehe Beispiele). Global lässt sich das in die Präambel nach dem Einfügen des Paketes die folgende Konfigurationssequenz einbauen.
+
+Des weiteren sollte man bei der Verwendung von Toleranzen die Klammerung durch das schönere $\pm$ ersetzen. Dies erreicht man mit \verb|separate-uncertainty=true|. Ohne weiteres zutun werden Werte mit Toleranzen allerdings geklammert. Dies lässt sich mit der Option \verb|multi-part-units=single| abschalten. Wer die Einheit gerne hinter dem Zahlenwert \emph{und} der Toleranz sehen will, der nimmt statt \texttt{single} einfach \texttt{repeat}.
 
 \begin{verbatim}
 \sisetup{
   per-mode=fraction,
   fraction-function=\tfrac,
-  separate-uncertainty=true
+  separate-uncertainty=true,
+  multi-part-units=single
 }
 \end{verbatim}
-
-\begin{anmerkung}
-Offen ist noch, warum die Anwendung von Toleranzen mit Einheiten äußerere Klammern
-einfügt. (\verb|\SI{7+-0,1}{\metre}|). Möchte man das nicht, muss man vorerst auf eine
-getrennte Anwendung von \verb|\num| und \verb|\si| zurückgreifen.
-\end{anmerkung}
 
 % % nur mit Paket \texttt{unit}!
 % Will man die Einheit leider als Bruch, dann geht das mit \verb|\unitfrac| ebenfalls recht einfach.
@@ -467,7 +467,7 @@ Für Bereiche und Listen setzt \texttt{siunitx} automatisch die passenden Begrif
 
 Beispiel: \verb|\documentclass[ngerman]{scrartcl}|\\
 
-Gegebenenfalls muss man auch die Option \texttt{locale=DE} an \texttt{siunitx} angeben. Dies sorgt dafür, dass die Darstellung der Zahlen ``eingedeutscht'' werden.
+Will man die Zahlenwerte den Spracheinstellungen anpassen, muss man auch die Option \texttt{locale=DE} an \texttt{siunitx} übergeben. Dies sorgt dann dafür, dass die Darstellung der Zahlen ``eingedeutscht'' wird.
 \end{anmerkung}
 
 

@@ -14,7 +14,7 @@
 
 
 % ----- Lokale Definitionen -----
-\def\ThisReleaseId{\textbf{Revision~R.2}}
+\def\ThisReleaseId{\textbf{Revision~R.3}}
 % -------------------------------
 
 \hypersetup{
@@ -210,7 +210,7 @@ Um zum Beispiel eine Taste zu stilisieren, kann man einen mit einem Oval umrahmt
 \subsection{Symbolische Darstellung von Tasten und Menüs}
 \label{sec:key-box}
 
-Das sehr interessante Paket \texttt{menukeys} erlaubt das einfache Setzen von Menühierarchien und Tasten. Mit dem Befehl kann man einen Menueintrag oder durch \verb|>| getrennt ganze Hierarchien angeben. Für Tasten gibt den Befehl \texttt{keys}, der Einzeltasten und durch \verb|+| verbunden auch Tastenkombinationen darstellen kann. Verzeichnispfade kann man mit \texttt{directory} abbilden.
+Das sehr interessante Paket \texttt{menukeys} erlaubt das einfache Setzen von Menühierarchien und Tasten. Mit dem Befehl kann man einen Menüeintrag oder durch \verb|>| getrennt ganze Hierarchien angeben. Für Tasten gibt den Befehl \texttt{keys}, der Einzeltasten und durch \verb|+| verbunden auch Tastenkombinationen darstellen kann. Verzeichnispfade kann man mit \texttt{directory} abbilden.
 
 \begin{tabular}{ll}
     \verb|\menu{Extras}|                         & \menu{Extras}                         \\
@@ -225,7 +225,7 @@ Das sehr interessante Paket \texttt{menukeys} erlaubt das einfache Setzen von Me
 \subsection{Eine Tastenliste}
 \label{sec:key-lst}
 
-Um in einer Dokumentation eine ganze Reihe von Tasten zu beschreiben, bietet sich nochfolgende modifizierte Liste an. Die Umbegung \texttt{Keylist} verwendet den unter Abschnitt~\ref{sec:key-box} aufgezeigten Befehl \texttt{key} zur Darstellung von Tasten. Zudem werden der hängende Text nach der Taste (dem item) eingerückt. Das Maß der Einrückung wird aus der Breite des als Parameter übergebenen Textes ermittelt. Man muss hier also die längste Tastenbeschriftung übergeben.
+Um in einer Dokumentation eine ganze Reihe von Tasten zu beschreiben, bietet sich nachfolgende modifizierte Liste an. Die Umbegung \texttt{Keylist} verwendet den unter Abschnitt~\ref{sec:key-box} aufgezeigten Befehl \texttt{key} zur Darstellung von Tasten. Zudem werden der hängende Text nach der Taste (dem item) eingerückt. Das Maß der Einrückung wird aus der Breite des als Parameter übergebenen Textes ermittelt. Man muss hier also die längste Tastenbeschriftung übergeben.
 
 Das ganze ist eine Modifikation der Liste \texttt{Ventry} aus dem ``LaTeX Begleiter''.
 
@@ -245,7 +245,7 @@ Das ganze ist eine Modifikation der Liste \texttt{Ventry} aus dem ``LaTeX Beglei
 %% -------------------------------------------------------------------------
 \subsection{Eine Verbatim-Box}
 
-Die Umbegung \texttt{verbatim} wird normalerweise immer linksbündig ausgegeben. Zudem lässt sie sich nicht zentrieren. Das kann man umgehen, in dem man die Umgebung \texttt{verbatim} in eine \texttt{minipage} packt. Dies erlaubt nun die Zentrierung oder auch die Verwendung einer \texttt{figure} Umgebung, so dass man nun auch Referenzen verwenden kann. Das nachfolgende Schnipsel zeigt eine solche Verwendung. In diesem Beispiel wird die Breite der \texttt{minipage} auf die Hälfte der Zeilenbreite reduziert.
+Die Umgebung \texttt{verbatim} wird normalerweise immer linksbündig ausgegeben. Zudem lässt sie sich nicht zentrieren. Das kann man umgehen, in dem man die Umgebung \texttt{verbatim} in eine \texttt{minipage} packt. Dies erlaubt nun die Zentrierung oder auch die Verwendung einer \texttt{figure} Umgebung, so dass man nun auch Referenzen verwenden kann. Das nachfolgende Schnipsel zeigt eine solche Verwendung. In diesem Beispiel wird die Breite der \texttt{minipage} auf die Hälfte der Zeilenbreite reduziert.
 
 \begin{verbatim}
   \begin{figure}[htbp]
@@ -268,7 +268,7 @@ Die Umbegung \texttt{verbatim} wird normalerweise immer linksbündig ausgegeben.
 Dies ist eine Anmerkungsbox, wie sie mit dem \emph{neuen} Environment \texttt{anmerkung} erzeugt wird. Das ganze bezieht sich auf die Zeilenbreite, und sollte somit auch bei zweispaltigem Satz korrekt arbeiten.
 \end{anmerkung}
 
-Diese hübsche und leichtgewichtige (da von Paketen unabhängige) Box erreicht man durch folgende neue Umgebung. Der optionale Parameter ist der ``Titel'' des Textes, der dem nachfolgenden Satz vorangestellt wird. Der Default ist \textbf{Anmerkung:}. Das ganze basiert übrigends auf einem Posting von Bernd Raichle. Ich habe nur ein paar kleine Änderungen vorgenommen.
+Diese hübsche und leichtgewichtige (da von Paketen unabhängige) Box erreicht man durch folgende neue Umgebung. Der optionale Parameter ist der ``Titel'' des Textes, der dem nachfolgenden Satz vorangestellt wird. Der Default ist \textbf{Anmerkung:}. Das ganze basiert übrigens auf einem Posting von Bernd Raichle. Ich habe nur ein paar kleine Änderungen vorgenommen.
 
 \begin{verbatim}
   \newenvironment{anmerkung}[1][Anmerkung:]{%
@@ -374,7 +374,7 @@ Ein Beispiel für das Ergebnis dieses neuen Befehls sind die folgenden Testpunkt
 Verwendet wird der Befehl durch \verb|\Testpunkt{}| gefolgt von dem normalen Fließtext. Man kann diesem Befehl ein Label übergeben (\verb|\Testpunkt{tp:xx}|), so dass sich mit \verb|\ref{tp:xx}| auf die Nummer dieses Testpunkts beziehen kann.
 
 \begin{anmerkung}
-In einer eigenen QSM-Klasse sollte der Name ``Testpunkt'' über eine Variable konfigurierbar gemacht werden. Des weiteren sollte die Referenz nicht über ``\verb|Testpunkt~\ref{}|'' erfolgen. hierfür sollte ein eigener Befehl exisitieren, der den entsprechenen Namen aus der Variable des Pakets ließt.
+In einer eigenen QMS-Klasse sollte der Name ``Testpunkt'' über eine Variable konfigurierbar gemacht werden. Des weiteren sollte die Referenz nicht über ``\verb|Testpunkt~\ref{}|'' erfolgen. hierfür sollte ein eigener Befehl existieren, der den entsprechenden Namen aus der Variable des Pakets ließt.
 \end{anmerkung}
 
 %% =========================================================================
@@ -463,7 +463,7 @@ Gibt man eine Liste oder einen Bereich von Zahlen an, dann gehört die Einheit a
 \end{itemize}
 
 \begin{anmerkung}
-Für Bereiche und Listen setzt \texttt{siunitx} automatisch die passenden Begriffe ``bis'' oder ``und'' ein. Damit das auch in der richtigen Sprache erfolgt, reicht es \emph{nicht} aus, einfach nur das Paket \texttt{babel} zu laden. Man muss hierfür die Sprache an Klassenoption an die Dokumentenklasse übergeben. Dadurch bekommen alle später geladenen Paket die Sprache mit. Das hat dann den Nebeneffekt, dass \emph{KOMA-Script} auch gleich Babel mitlädt.
+Für Bereiche und Listen setzt \texttt{siunitx} automatisch die passenden Begriffe ``bis'' oder ``und'' ein. Damit das auch in der richtigen Sprache erfolgt, reicht es \emph{nicht} aus, einfach nur das Paket \texttt{babel} zu laden. Man muss hierfür die Sprache an Klassenoption an die Dokumentenklasse übergeben. Dadurch bekommen alle später geladenen Paket die Sprache mit. Das hat dann den Nebeneffekt, dass \emph{KOMA-Script} auch gleich Babel mit lädt.
 
 Beispiel: \verb|\documentclass[ngerman]{scrartcl}|\\
 
@@ -535,7 +535,7 @@ Mit folgenden Sequenzen lässt sich die Silbentrennung steuern:
   Definiert eine Trennhilfe für Wörter, deren Trennung an einer Stelle
   anders als erwartet aussieht. Ende ist dabei das Ende des ersten
   Wortteils in der getrennten Form, Anfang der Anfang des zweiten
-  Wortteils in der getrennten Form, und Ungetrennt ist die betreffende
+  Wortteils in der getrennten Form, und ``Ungetrennt'' ist die betreffende
   Stelle in ungetrennter Form. Durch die Angabe aller Varianten bleibt
   LaTeX frei in der Platzierung und Trennung des betreffenden Wortes.
   Wörter mit ``ck'' hatten nach alter Rechtschreibung (also vor 1996)
@@ -558,7 +558,7 @@ Bei Zusammengesetzen Worten, deren Trennung komplexer ist (wie z.B. ``LaTeX-Wör
 \newcommand{\LW}{LaTeX"=Wörter"-buch\xspace}
 \end{verbatim}
 
-\textbf{Tipp:} mit \verb|\xspace| kann man ein ``intelligentes'' Leerzeichen einbauen. Danach kommt auch mit \verb|\LW ...| ein Leezeichen (wie bei \verb|\LW{} ...|). Folgt dem Befehl aber ein Satzzeichen, dann wird kein Leerzeichen eingefügt!
+\textbf{Tipp:} mit \verb|\xspace| kann man ein ``intelligentes'' Leerzeichen einbauen. Danach kommt auch mit \verb|\LW ...| ein Leerzeichen (wie bei \verb|\LW{} ...|). Folgt dem Befehl aber ein Satzzeichen, dann wird kein Leerzeichen eingefügt!
 
 %% -------------------------------------------------------------------------
 \subsection{Verhindern der Silbentrennung}
@@ -569,11 +569,11 @@ Will man die Silbentrennung komplett verhindern, dann muss man dazu das Wort ein
 %% =========================================================================
 \section{Das Spiel mit Sprachen}
 
-Das Handling der Sprachen in einem Dokument übernimmt das Paket \texttt{babel}. Für "Deutsch" sollte man die "neue" Rechschreibung verwenden. Dazu gibt man dem Paket die Option \texttt{ngerman} mit auf den Weg. \LaTeX{} kümmert sich dann mit Hilfe von \texttt{babel} auch gleich um die Formatierung von länderspezifischen Dingen wie Zahlen oder dem Datum.
+Die Handhabung der Sprachen in einem Dokument übernimmt das Paket \texttt{babel}. Für "Deutsch" sollte man die "neue" Rechtschreibung verwenden. Dazu gibt man dem Paket die Option \texttt{ngerman} mit auf den Weg. \LaTeX{} kümmert sich dann mit Hilfe von \texttt{babel} auch gleich um die Formatierung von länderspezifischen Dingen wie Zahlen oder dem Datum.
 
 Jetzt kommt es nicht selten vor, dass in einem Text verschiedene Sprachen wendet werden müssen. Bei \texttt{babel} gibt man die zusätzlichen Sprachen durch Komma getrennt als weitere Paketoptionen an. \textbf{Wichtig:} die \emph{letzte} Sprache ist die Sprache, die als Vorgabe verwendet wird.
 
-Die Umschaltung von Sprachen erfolgt mit \texttt{selectlanguage}. Hierbei kann man den Textteil als zweiten Parameter angeben, oder man rahmt den Textbereich mit geschweiften Klammern und setzt den Befehl dort als erstes ein. Das nachfolgende Schnippsel zweigt die Umstellung:
+Die Umschaltung von Sprachen erfolgt mit \texttt{selectlanguage}. Hierbei kann man den Textteil als zweiten Parameter angeben, oder man rahmt den Textbereich mit geschweiften Klammern und setzt den Befehl dort als erstes ein. Alternativ zu \texttt{selectlanguage} kann man ganze Paragrafen und Blöcke mit der Umgebung \texttt{otherlanguage} umschalten. Das Zurückstellen auf die Vorgabesprache erfolgt dann implizit. Das nachfolgende Schnippsel zweigt die Umstellung:
 
 \begin{verbatim}
 \usepackage[english,ngerman]{babel}  %& default ist ngerman
@@ -585,18 +585,10 @@ Ein Beispiel für \foreignlanguage{english}{small regions}.
 Toggle to English for the following text.
 \foreignlanguage{ngerman}
 und zurück auf Deutsch. Beides Explizit.
-\end{verbatim}
-
-Alternativ zu \texttt{selectlanguage} kann man ganze Paragrafen und Blöcke mit
-der Umgebung \texttt{otherlanguage} umschalten. Das Zurückstellen auf die
-Vorgabesprache erfolgt dann implizit.
-
-\begin{verbatim}
 \begin{otherlanguage}{englisch}
 A longer block or paragraph...
 \end{otherlanguage}{englisch}
 \end{verbatim}
-
 
 \paragraph{Quellen:}
 \begin{enumerate}
@@ -607,9 +599,9 @@ A longer block or paragraph...
 %% =========================================================================
 \section{Das Spiel mit Farben}
 
-Um die Welt von \LaTeX{} farbiger zu gestallten, muss man das Paket \texttt{xcolor} laden. Dieses stellt ein Bündel standardfarben zur Verfügung. Die Namen der Farben sind teilweise nicht sehr eingänglich, weshalb man dem Paket eine Option für verschiedene Bezeichnungen anderer Werkzeuge aufzuzwingen. Man kann aber auch eigene Farben definieren. Das ist besondern interessant, da es im Internet eine Vielzahl von Generatoren für hüb aussehende Farbkombinationen gibt. Mein persönlicher Favorit ist \href{http://paletton.com}{paletton.com}. Hiermit habe ich eine \href{http://paletton.com/#uid=c012Y0+3r0kkZm3aow+fKrcpThlv9ca}{online erzeugte Palette} entworfen, die meinen Anforderungen für verschiedene Aufgaben erfüllt. Die RGB-Werte kann man dann mit Hilfe des Befehls \texttt{definecolor} einem Namen zuordnen.
+Um die Welt von \LaTeX{} farbiger zu gestalten, muss man das Paket \texttt{xcolor} laden. Dieses stellt ein Bündel Standardfarben zur Verfügung. Die Namen der Farben sind teilweise nicht sehr eingänglich, weshalb man dem Paket eine Option für verschiedene Bezeichnungen anderer Werkzeuge aufzwingen kann. Man kann aber auch eigene Farben definieren. Das ist besonders interessant, da es im Internet eine Vielzahl von Generatoren für hübsch aussehende Farbkombinationen gibt. Mein persönlicher Favorit ist \href{http://paletton.com}{paletton.com}. Hiermit habe ich eine \href{http://paletton.com/#uid=c012Y0+3r0kkZm3aow+fKrcpThlv9ca}{online erzeugte Palette} entworfen, die meinen Anforderungen für verschiedene Aufgaben erfüllt. Die RGB-Werte kann man dann mit Hilfe des Befehls \texttt{definecolor} einem Namen zuordnen.
 
-Bei der Verwendung eigener Farben ist es sinnvoll, wenn man sich die Farben mit Namen definiert, die nicht mit anderen Namen kollidieren. Ich habe hier den Prefix \texttt{my} vorangestellt. In Anwendungen bei denen den Farben bestimmte bedeutungen zugeordnet werden, sollte der Farbname diese Bedeutung wiederspiegeln. So kann man später die Farbe ändern, ohne den ganzen Text durchzusehen.
+Bei der Verwendung eigener Farben ist es sinnvoll, wenn man sich die Farben mit Namen definiert, die nicht mit anderen Namen kollidieren. Ich habe hier den Prefix \texttt{my} vorangestellt. In Anwendungen bei denen den Farben bestimmte Bedeutungen zugeordnet werden, sollte der Farbname diese Bedeutung widerspiegeln. So kann man später die Farbe ändern, ohne den ganzen Text durchzusehen.
 
 %% -------------------------------------------------------------------------
 \subsection{Eine pastellige Farbpalette}
@@ -670,7 +662,7 @@ Um ein Leerzeichen als solches sichtbar in einem Text darzustellen verfügt \LaT
 
 Ein explizit sichtbares Leerzeichen: a\textvisiblespace b
 
-Die Breite dieses \emph{sichtbaren Leezeichens} ist aber fest definiert. Will man eine Variante mit definierbarer Breite, dann muss man sich einen eigenen Befehl bauen. Mit dem lassen sich dann nicht nur Leerzeichen ersetzen, sondern er eignet sich auch für die Darstellung von auszufüllenden Feldern in Formularen.
+Die Breite dieses \emph{sichtbaren Leerzeichens} ist aber fest definiert. Will man eine Variante mit definierbarer Breite, dann muss man sich einen eigenen Befehl bauen. Mit dem lassen sich dann nicht nur Leerzeichen ersetzen, sondern er eignet sich auch für die Darstellung von auszufüllenden Feldern in Formularen.
 
 Während der originale Befehl ohne Parameter wie folgt aussieht,
 
@@ -702,7 +694,7 @@ Ein sichtbares Leerzeichen mit \texttt{1cm}: a\Vtextvisiblespace[1cm]b
 %% -------------------------------------------------------------------------
 \subsection{Spacing der Paragraphen anpassen}
 
-Ohne zutun verwenden die meisten \LaTeX{} Dokumentenklassen zur optischen Trennung der Paragraphen eine Einrückung ohne einen vertikalen Zeilenabstand. Um dass zu ändern, kann man in den \emph{KOMA-Script} Dokumentenklassen die Klassenoption \texttt{parskip=half} übergeben. Für andere Dokumentenklassen ist das Paket \verb|parskip| einfügen. Wer ein wenig mehr Kontrolle haben mächte, der kann stattdessen die nachfolgenden Einstellungen verwenden.
+Ohne zutun verwenden die meisten \LaTeX{} Dokumentenklassen zur optischen Trennung der Paragraphen eine Einrückung ohne einen vertikalen Zeilenabstand. Um dass zu ändern, kann man in den \emph{KOMA-Script} Dokumentenklassen die Klassenoption \texttt{parskip=half} übergeben. Für andere Dokumentenklassen ist das Paket \verb|parskip| einfügen. Wer ein wenig mehr Kontrolle haben möchte, der kann stattdessen die nachfolgenden Einstellungen verwenden.
 
 \begin{verbatim}
 \setlength{\parindent}{0pt}
@@ -717,6 +709,22 @@ Alternativ könnte man auch mit der fixen Größeneinheit \texttt{pt} arbeiten.
 \setlength{\parskip}{6pt plus 2pt minus 1pt}
 \end{verbatim}
 
+%% -------------------------------------------------------------------------
+\subsection{Aufgeräumte Verzeichnisse durch kurze Titel}
+
+In wissenschaftlichen Arbeiten kommt es häufiger zu überlangen
+Bildunterschriften oder Tabellenüberschriften. Wenn diese dann im jeweiligen
+Verzeichnis landen, führt das zu unschönen Ergebnissen. Für die Befehle
+\texttt{caption}, \texttt{section}, \texttt{chapter} etc. gibt es ein
+optionales Argument, welches für die jeweiligen Verzeichnisse verwendet wird.
+Hier kann man eine kurze Zusammenfassung des Textes verwenden.
+
+\begin{verbatim}
+\caption[Kurze Bezeichnung für das Verzeichnis]%
+	{Lange Bezeichnung für die Beschriftung direkt am Objekt}
+\end{verbatim}
+
+
 %% =========================================================================
 \appendix
 \section{Anhang}
@@ -729,7 +737,9 @@ Alternativ könnte man auch mit der fixen Größeneinheit \texttt{pt} arbeiten.
 \textbf{Revision} & \textbf{Kommentar}  \\
 \midrule
 R.1  &  erste Veröffentlichung \\
-R.2  &  Ergänzungen zur Nutzung von siunitx und Toleranzen \\
+R.2  &  Ergänzungen zur Nutzung von \texttt{siunitx} und Toleranzen \\
+R.3  &  Kleine Korrekturen. Umgebung \texttt{otherlanguage} erwähnt. \\
+     &  Tipp zu alternativen Titeln in Verzeichnissen.\\
 \bottomrule
 \end{tabular}
 

@@ -587,6 +587,17 @@ Toggle to English for the following text.
 und zurück auf Deutsch. Beides Explizit.
 \end{verbatim}
 
+Alternativ zu \texttt{selectlanguage} kann man ganze Paragrafen und Blöcke mit
+der Umgebung \texttt{otherlanguage} umschalten. Das Zurückstellen auf die
+Vorgabesprache erfolgt dann implizit.
+
+\begin{verbatim}
+\begin{otherlanguage}{englisch}
+A longer block or paragraph...
+\end{otherlanguage}{englisch}
+\end{verbatim}
+
+
 \paragraph{Quellen:}
 \begin{enumerate}
     \item \href{http://tug.ctan.org/tex-archive/macros/latex/required/babel/}{babel} auf CTAN.

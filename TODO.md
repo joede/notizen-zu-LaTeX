@@ -8,6 +8,7 @@ Die folgenden Punkte könnte (sollte?) man auch in ein separates Dokument auslag
 * Abschnitt über "Interessante Pakete"
   * booktabs, xcolor, xspace, mdframe, ...
   * varioref, hyperref und cleverref genau in der Reihenfolge. Sowohl varioref als auch cleverref nutzen den Parameter [ngerman].  Siehe archive/unsorted/publish/.../test-cleverref-varioref-hyperref.ltx!
+  * enumitem -- Control layout of itemize, enumerate, description. Das ist der Nachfolger von mwdlist!
   * mdwlist -- neues environment `itemize*` mit geringerem Linespacing zwischen den "Items".
 * Abschnitt über "Interessante Tools"
   * TeXstudio

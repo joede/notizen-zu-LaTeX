@@ -13,9 +13,13 @@
 \usepackage[framemethod=tikz]{mdframed}
 
 
-% ----- Lokale Definitionen -----
-\def\ThisReleaseId{\textbf{Revision~R.3}}
-% -------------------------------
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+% ----- Lokale Definitionen ------------------------------------
+\def\ThisReleaseId{\textbf{Revision~R.4}}
+% --------------------------------------------------------------
+% --------------------------------------------------------------
+% --------------------------------------------------------------
 
 \hypersetup{
     pdftitle = {Notizen zu LaTeX},
@@ -148,12 +152,22 @@ von Änderungen, sobald sich einmal die Zeit dazu bietet.
 %% -------------------------------------------------------------------------
 \subsection{Notizen im Randbereich}
 
-\marginlabel{Eine kleine Anmerkung am Rande} Der neue Befehl \texttt{marginlabel} erzeugt eine Randnotiz. Da diese nicht so sehr auffallen sollte, ist die kleiner gesetzt. Um Trennungsprobleme zu minimieren und den Abstand zum Fließtext, ist der Text rechtsbündig. Durch das führende \verb|\hspace{0pt}| kann auch schon das erste Word getrennt werden. Dies ist wegen der geringen Breite sinnvoll.
+In \LaTeX{} kann man Randnotizen von hause aus mit \texttt{marginpar} erzeugen. Die so erzeugten Texte entsprechen aber dem regulären Fließtext. Der neue Befehl \texttt{marginlabel} erzeugt eine angepasste Randnotiz. Da diese nicht so sehr auffallen soll, ist der Text kleiner gesetzt.
+\marginlabel{Eine kleine Anmerkung am Rande}
+Um Trennungsprobleme zu minimieren und den Abstand zum Fließtext zu verdeutlichen, ist der Text rechtsbündig. Durch das führende \verb|\hspace{0pt}| kann auch schon das erste Word getrennt werden. Dies ist wegen der geringen Breite sinnvoll.
+
+Will man zum Beispiel eine \texttt{itemize} im Randbereich nutzen, dann sind die automatischen Abstände vor und nach der Umgebung störend. Mit dem Paket \texttt{enumitem} hat man sehr viel Kontrolle über das Layout von \texttt{itemize}, \texttt{enumerate} und \texttt{description} Umgebungen. Mittels der Option \verb|[nolistsep]| können diese Abstände angeschaltet werden.
 
 \begin{verbatim}
   \newcommand{\marginlabel}[1]%
     {\mbox{}\marginpar{\raggedleft\footnotesize%
      \itshape\hspace{0pt}#1}\ignorespaces}
+
+  \marginlabel{Eine kleine Anmerkung am Rande}
+  \marginpar{\begin{enumerate}[nolistsep]
+             \item Ich liebe Eis.
+             \item Ich liebe Radfahren.
+             \end{enumerate}}
 \end{verbatim}
 
 
@@ -740,6 +754,7 @@ R.1  &  erste Veröffentlichung \\
 R.2  &  Ergänzungen zur Nutzung von \texttt{siunitx} und Toleranzen \\
 R.3  &  Kleine Korrekturen. Umgebung \texttt{otherlanguage} erwähnt. \\
      &  Tipp zu alternativen Titeln in Verzeichnissen.\\
+R.4  &  Tipps zu Umgebungen innerhalb von \texttt{marginpar}.\\
 \bottomrule
 \end{tabular}
 

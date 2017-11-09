@@ -16,7 +16,7 @@
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 % ----- Lokale Definitionen ------------------------------------
-\def\ThisReleaseId{\textbf{Revision~R.4}}
+\def\ThisReleaseId{\textbf{Revision~R.5}}
 % --------------------------------------------------------------
 % --------------------------------------------------------------
 % --------------------------------------------------------------
@@ -738,6 +738,34 @@ Hier kann man eine kurze Zusammenfassung des Textes verwenden.
 	{Lange Bezeichnung für die Beschriftung direkt am Objekt}
 \end{verbatim}
 
+%% -------------------------------------------------------------------------
+\subsection{Richtige Leerzeichen in Formeln}
+
+Um an den richtigen Stellen Leerzeichen zu bekommen, muss man ein \verb|\,|
+einfügen. Macht man das nicht, erscheint an manchen Stellen eine Begriff eher
+als Produkt. Des weiteren sollte man Funktionen wie \texttt{log} nicht als Name
+sondern als Befehl \verb|\log| ausführen. Im folgenden einige Beispiele:
+
+\begin{itemize}
+    \item \verb|\log e^x = x| ($\log e^x = x$) statt \verb|log e^x = x| ($log e^x = x$)
+    \item[] gut: $\log e^x = x$) schlecht: $log e^x = x$
+    \item \verb|\sin 2u = 2 \sin u \cos u| statt \verb|sin 2u = 2 sin u cos u|
+    \item[] gut: $\sin 2u = 2 \sin u \cos u$ schlecht: $sin 2u = 2 sin u cos u$
+    \item \verb|dx \, dy = r \, dr \, d\theta| statt \verb|dx dy = r dr d\theta|
+    \item[] gut: $dx \, dy = r \, dr \, d\theta$ schlecht: $dx dy = r dr d\theta$
+    \item \verb|\int_0^1 f(x) \, dx| statt \verb|\int_0^1 f(x) dx|
+    \item[] gut: $\int_0^1 f(x) \, dx$ schlecht: $\int_0^1 f(x) dx$
+\end{itemize}
+
+%% -------------------------------------------------------------------------
+\subsection{Richtige Anführungszeichen}
+
+Es kommt immer wieder vor, dass die Anführungszeichen auch als \verb|"| getippt
+werden. Das führt dann zu so hässlichen Erscheinungen wie "dem hier". Korrekte
+Anführungszeichen werden in \LaTeX mit \verb|``| (zwei \emph{back ticks}) am
+Anfang und \verb|''| (zwei einfache Anführungszeichen) am Ende erzeugt. Dann
+sieht das Ganze ``sehr schön'' aus und nutzt die länderspezifischen Vorgaben.
+
 
 %% =========================================================================
 \appendix
@@ -755,6 +783,7 @@ R.2  &  Ergänzungen zur Nutzung von \texttt{siunitx} und Toleranzen \\
 R.3  &  Kleine Korrekturen. Umgebung \texttt{otherlanguage} erwähnt. \\
      &  Tipp zu alternativen Titeln in Verzeichnissen.\\
 R.4  &  Tipps zu Umgebungen innerhalb von \texttt{marginpar}.\\
+R.5  &  Zwei neue Abschnitte unter ``Verschiedene Kleinigkeiten''.\\
 \bottomrule
 \end{tabular}
 
